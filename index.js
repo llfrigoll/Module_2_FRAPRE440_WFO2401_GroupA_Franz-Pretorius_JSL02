@@ -21,24 +21,39 @@ document.querySelector('#submitWorkout').addEventListener('click', displayWorkou
 const addNewGoal = () => {
     const goalInput = document.querySelector('#goalInput').value;
     const goalList = document.querySelector('#goalList');
+
+    //Created a const for the NodeList containing the list items in the goal list
+    const goalListArray = document.querySelectorAll('#goalList > li');
+    //Created a duplicate boolean that is false
+    let isDuplicate = false;
+
+    //If statement that checks if the NodeList is empty
+    if(goalListArray.length === 0) {
+        //Empty NodeList enables normal list item creation
+        const newGoal = document.createElement('li');
+        newGoal.textContent = goalInput;
+        goalList.appendChild(newGoal);
+    } else {
+        //Non-empty NodeList enables looping through the list
+        for(let i = 0; i < goalListArray.length; i++) {
+            //Checks if any item in the NodeList is equal to the entered input of a new goal
+            if(goalListArray[i].textContent === goalInput) {
+                //If there is a duplicate the boolean is set to true
+                isDuplicate = true;
+            }
+        }
+        if(isDuplicate) {
+            //True boolean displays alert and exits function
+            alert("This goal already exists");
+            return;
+        } else {
+            //False boolean enables creation of list item
+            const newGoal = document.createElement('li');
+            newGoal.textContent = goalInput;
+            goalList.appendChild(newGoal);
+        }
+    }
     
-    // ⚠️ Hint 1: Check for duplicates
-    // Use 'goalList' to get all existing goals and check if 'goalInput' matches any of them.
-    
-    // ⚠️ Hint 2: Prevent duplicates
-    // If a duplicate is found, display an alert to the user and don't add the goal to the list.
-    // If it's not a duplicate, proceed with adding it as a new goal.
-    
-    // ⚠️ Hint 3: Code structure
-    // You might want to wrap the duplicate-checking logic in an 'if' statement.
-    
-    // ⚠️ Hint 4: Event listener
-    // The event listener that removes goals when clicked is not related to this issue.
-    // Focus on preventing duplicates for now.
-    
-    const newGoal = document.createElement('li');
-    newGoal.textContent = goalInput;
-    goalList.appendChild(newGoal);
 };
 
 // Add event listener to the goal submit button
